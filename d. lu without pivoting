@@ -1,0 +1,68 @@
+
+n = input("Enter number of equations: ");
+disp(n);
+A = input("Enter matrix: \n");
+disp(A);
+B = input("Enter b vector: \n");
+B = transpose(B);
+disp(B);
+
+function [L,A]= LUdecomposition(A,n)
+    L=eye(n);
+    for k=1:n
+        L(k+1:n,k)=A(k+1:n,k)/A(k,k);
+        for j=k+1:n
+            A(j,:)=A(j,:)-L(j,k)*A(k,:);
+        end
+    end
+end    
+
+[L,U] = LUdecomposition(A,n);
+
+#disp("L:");
+L
+#disp("U: ");
+U
+
+    for k = 1:n-1
+        for i = k+1:n
+            factor = L(i,k)/L(k,k);
+            for j = k:n
+                L(i,j) = L(i,j) - factor*L(k,j);
+            end
+            B(i,1) = B(i,1) - factor*B(k,1);
+        end;
+    end
+    
+    Y(n) = B(n,1)/L(n,n);
+    for i = n-1:-1:1
+        sum = B(i,1);
+        for j = i+1:n
+            sum = sum - L(i,j)*Y(j);
+        end
+        Y(i) = sum/L(i,i);
+    end;
+    Y = Y(:);
+
+
+    for k = 1:n-1
+        for i = k+1:n
+            factor = U(i,k)/U(k,k);
+            for j = k:n
+                U(i,j) = U(i,j) - factor*U(k,j);
+            end
+            Y(i,1) = Y(i,1) - factor*Y(k,1);
+        end;
+    end
+    
+    X(n) = Y(n,1)/U(n,n);
+    for i = n-1:-1:1
+        sum = Y(i,1);
+        for j = i+1:n
+            sum = sum - U(i,j)*X(j);
+        end
+        X(i) = sum/U(i,i);
+    end;
+    X = X(:);
+    disp("Solution vector is: ");
+    X

@@ -1,0 +1,58 @@
+﻿
+n = input("The number of equations :");
+disp(n);
+coefficient_matrix = input("Coefficient matrix:\n");
+disp(coefficient_matrix);
+a = coefficient_matrix
+b_vector = input("B vector:");
+disp(b_vector);
+
+    
+    cholesky_factor = zeros(n);
+    c_vector = zeros(n,1);
+    x_vector = zeros(n,1);
+    for i=1:n,
+        for j=1:n,
+            if i>=j
+                if i==j
+                    summation_val = 0;
+                    for k=1:j-1,
+                        summation_val += cholesky_factor(j,k)*cholesky_factor(j,k);
+                    end
+                    cholesky_factor(i,j) = sqrt(coefficient_matrix(j,j) - summation_val);
+                else
+                    summation_val = 0;
+                    for k=1:j-1,
+                        summation_val += cholesky_factor(j,k)*cholesky_factor(i,k);
+                    end
+                    cholesky_factor(i,j) = (coefficient_matrix(i,j) - summation_val)/cholesky_factor(j,j);
+                endif
+            endif
+        end
+    end
+    L = cholesky_factor;
+    L
+    
+    U=L'
+    
+    %forward substitution to find c vector
+    for i=1:n,
+        summation_val = 0;
+        for j=1:i-1
+            summation_val += L(i,j)*c_vector(j,1);
+        end
+        c_vector(i,1) = (b_vector(i) - summation_val)/L(i,i);
+    end
+
+    %backward substitution to get x vector
+    for i=n:-1:1,
+        summation_val = 0;
+        for j=i+1:n,
+            summation_val += L(j,i)*x_vector(j,1);
+        end
+        x_vector(i,1) = (c_vector(i,1) - summation_val)/L(i,i);
+    end
+    x_vector
+
+
+ 

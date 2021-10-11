@@ -1,0 +1,100 @@
+
+n = input("Enter number of equations: ");
+disp(n);
+A = input("Enter matrix: \n");
+disp(A);
+B = input("Enter b vector: \n");
+B = transpose(B);
+disp(B);
+
+function [A,B] = scaling(A,B,n)
+    for i = 1:n
+        max = abs(A(i,1));
+        for j = 1:n
+            if abs(A(i,j)) > abs(max)
+                max = A(i,j);
+            end
+        end
+        if abs(max) > 1000
+            A(i,:) = A(i,:)/max;
+            B(i) = B(i)/max;
+        end
+    end
+    
+end    
+
+
+function [P1,P2] = pivoting(A,B,n)
+    
+    Ao = A;
+    Bo = B;
+    P1 = eye(n);    %row transformation
+    P2 = eye(n);    %column transformation
+    #P1
+    #P2
+    for k = 1:n-1       %pivoting
+        num = 0;
+        dummy = A(k,k);
+        store1 = k;
+        store2 = k;
+            
+        for t1 = k:n
+            for t2 = k:n
+                if abs(A(t1,t2) > dummy)
+                    dummy = A(t1,t2);
+                    store1 = t1;   %stores row index
+                    store2 = t2;   %stores column index 
+                end
+            end
+        end
+        
+        if store1 != k  
+            temp = P1(k,:);
+            P1(k,:) = P1(store1,:);
+            P1(store1,:) = temp;
+        end
+        
+        if store2 != k 
+            temp = P2(:,k);
+            P2(:,k) = P2(:,store2);
+            P2(:,store2) = temp;
+        end
+        
+        A = (P1*Ao)*P2;     % A is modified matrix,Ao is original A matrix
+        B = P1*Bo;      % B is modified vector,Bo is original B vector
+
+    end
+end
+
+    [A,B] = scaling(A,B,n);
+    [P1,P2] = pivoting(A,B,n);
+    A = (P1*A)*P2;     % A is modified matrix,Ao is original A matrix
+    B = P1*B;      % B is modified vector,Bo is original B vector
+    disp("Pivoted and scaled A matrix: \n");
+    disp(A);
+    disp("Modified B vector: \n");
+    disp(B);
+    disp("\n")
+    
+    for k = 1:n-1
+        for i = k+1:n
+            factor = A(i,k)/A(k,k);
+            for j = k:n
+                A(i,j) = A(i,j) - factor*A(k,j);
+            end
+            B(i,1) = B(i,1) - factor*B(k,1);
+        end;
+    end
+    
+    X(n) = B(n,1)/A(n,n);
+    #X
+    for i = n-1:-1:1
+        sum = B(i,1);
+        for j = i+1:n
+            sum = sum - A(i,j)*X(j);
+        end
+        X(i) = sum/A(i,i);
+    end;
+    X = X(:);
+    disp("Solution vector is: ");
+    disp(X);

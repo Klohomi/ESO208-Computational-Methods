@@ -1,0 +1,31 @@
+
+n = input("Enter number of equations: ");
+disp(n);
+A = input("Enter matrix: \n");
+disp(A);
+B = input("Enter b vector: \n");
+B = transpose(B);
+disp(B);
+
+    for k = 1:n-1
+        for i = k+1:n
+            factor = A(i,k)/A(k,k);
+            for j = k:n
+                A(i,j) = A(i,j) - factor*A(k,j);
+            end
+            B(i,1) = B(i,1) - factor*B(k,1);
+        end;
+    end
+    
+    X(n) = B(n,1)/A(n,n);
+    for i = n-1:-1:1
+        sum = B(i,1);
+        for j = i+1:n
+            sum = sum - A(i,j)*X(j);
+        end
+        X(i) = sum/A(i,i);
+    end;
+    X = X(:);
+disp("The solution vector is: ");
+disp(X);
+    

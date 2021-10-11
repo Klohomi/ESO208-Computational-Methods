@@ -1,0 +1,78 @@
+﻿
+n = input("The number of equations :");
+disp(n);
+coefficient_matrix = input("Coefficient matrix:\n");
+disp(coefficient_matrix);
+A = coefficient_matrix
+B = input("B vector:");
+disp(B);
+
+function [L,U] = LUdecomposition(A,n)
+    U = eye(n);
+    L = zeros(n);
+    for i = 1:n
+        L(i,1) = A(i,1);
+    end
+    for j = 2:n
+        U(1,j) = A(1,j)/A(1,1);
+    end
+    for k = 2:n
+        for i = k:n
+            sum = A(i,k);
+            for j = 1:k-1
+                sum = sum - L(i,j)*U(j,k);
+            end
+            L(i,k) = sum;
+        end
+        for j = k+1:n
+            sum = A(k,j);
+            for i = 1:k-1
+                sum = sum - L(k,i)*U(i,j);
+            end
+            U(k,j) = sum/L(k,k);
+        end
+    end
+
+end
+
+function D = forsubs(L,B,n)
+    D(1) = B(1)/L(1,1);
+    for i = 2:n
+        sum = B(i);
+        for j = 1:i-1
+            sum = sum - L(i,j)*D(j);
+        end
+        D(i) = sum/L(i,i);
+    end
+    D = D(:);
+end
+
+function X = backsubs(U,D,n)
+    X(n) = D(n)/U(n,n);
+    for i = n-1:-1:1
+        sum = D(i);
+        for j = i+1:n
+            sum = sum - U(i,j)*X(j);
+        end
+        X(i) = sum/U(i,i);
+    end
+    X = X(:);
+end
+
+
+     %CROUT DECOMPOSITION
+    [L,U] = LUdecomposition (A,n);  
+    
+    disp("Lower triangular matrix: ");
+    disp(L);
+    disp("\n");
+    disp("Upper triangular matrix: ");
+    disp(U);
+    disp("\n");    
+    
+    D = forsubs(L,B,n);
+    X = backsubs(U,D,n);
+    disp("Solution vector: ");
+    disp(X);
+    disp("\n");
+
