@@ -1,0 +1,19 @@
+Input the type of method:  a/b/c/d
+Input the degree of the matrix: 3
+Input the matrix: [[8,-1,-1];[-1,4,-2];[-1,-2,10]]
+Input the maximum iterations possible: 100
+Input the tolerance on approximate relatice error in  percantage: 0.001
+
+For method 'c' (shifted power method) input the shifting scaler: 8
+
+
+
+Another example:
+
+Input the type of method:  a/b/c/d
+Input the degree of the matrix: 3
+Input the matrix: [[1,2,3];[2,4,4];[3,4,8]]
+Input the maximum iterations possible: 100
+Input the tolerance on approximate relatice error in  percantage: 0.001
+
+For method 'c' (shifted power method) input the shifting scaler: 4

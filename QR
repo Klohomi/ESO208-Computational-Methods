@@ -1,0 +1,59 @@
+﻿n = input("Enter degree: ");
+A = input("Enter matrix: ");
+max_iter=input("Maximum iterations allowed:");
+max_err=input("Maximum relative error in percent:");
+
+
+    A0=A;
+    Q=[];
+    A2=zeros(n);
+    R=zeros(n);
+    Q(:,1)=A0(:,1)/norm(A0(:,1));
+    for i=2:n
+        for k=1:n
+            M(k,1)=0;
+        end;
+        for j=1:i-1
+            M(:,1)+=(dot(A(:,i),Q(:,j)))*Q(:,j);
+            R(j,i)=(dot(A(:,i),Q(:,j)));
+        end;
+        z(:,i)=A(:,i)-M(:,1);
+        Q(:,i)=z(:,i)/norm(z(:,i),2);
+    end
+    for i=1:n
+        R(i,i)=dot(Q(:,i),A(:,i));
+    end
+    A1=R*Q;
+    iter=1;
+    err=inf;
+    while err>max_err && iter<=max_iter
+        Q=[];
+        R=zeros(n);
+        Q(:,1)=A1(:,1)/norm(A1(:,1));
+        for i=2:n
+            for k=1:n
+                M(k,1)=0;
+            end;
+            for j=1:i-1
+                M(:,1)+=(dot(A1(:,i),Q(:,j)))*Q(:,j);
+                R(j,i)=(dot(A1(:,i),Q(:,j)));
+            end;
+            z(:,i)=A1(:,i)-M(:,1);
+            Q(:,i)=z(:,i)/norm(z(:,i),2);
+        end
+        for i=1:n
+            R(i,i)=dot(Q(:,i),A1(:,i));
+        end
+        A2=R*Q;
+        error=[];
+        for i=1:n
+            error(i)=abs((A2(i,i)-A1(i,i))/A2(i,i)*100);
+        end;
+        err=max(error);
+       # disp(err);
+        A1=A2;
+        iter++;
+    end
+    disp('eigenvalues:');
+    disp(diag(A2));
+    iter

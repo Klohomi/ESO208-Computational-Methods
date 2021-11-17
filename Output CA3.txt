@@ -1,0 +1,85 @@
+Output for the given input for option 'a':
+
+Eigenvalue is  
+10.779
+Eigen Vector is: 
+  -0.2509
+  -0.2397
+   0.9379
+Number of iterations : 
+30
+
+Output for the given input for option 'b':
+
+Eigenvalue is  
+3.0749
+Eigen Vector is: 
+   0.2482
+   0.9205
+   0.3017
+Number of iterations : 
+12
+
+Output for the given input for option 'c':
+
+X1: 
+   0.9356
+  -0.3085
+   0.1718
+eigenvalue is  8.1461
+itr = 6
+
+
+Output for the given input for option 'd':
+
+eigenvalues:
+   10.7788
+    8.1462
+    3.0749
+iter = 23
+
+
+
+
+
+Output for the second example:
+
+method a:
+
+Eigenvalue is  
+11.687
+Eigen Vector is: 
+   0.3195
+   0.5015
+   0.8040
+Number of iterations : 
+7
+
+method b:
+
+Eigenvalue is  
+-0.2229
+Eigen Vector is: 
+   0.9455
+  -0.2245
+  -0.2358
+Number of iterations : 
+7
+
+
+method c:
+X1: 
+   0.062316
+   0.835520
+  -0.545915
+eigenvalue is  1.5356
+itr = 19
+
+
+method d:
+
+eigenvalues:
+   11.6873
+    1.5356
+   -0.2229
+iter = 5
